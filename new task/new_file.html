@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-3.3.1.js"></script>
+    <style>
+        #canvas_draw{
+            margin: 0px;
+            background-color: #FFFFF0;
+        }
+    </style>
+</head>
+<body style="margin:0px;">
+    <div>
+        <canvas id="canvas_draw" width="500px" height="500px"></canvas>
+    </div>
+    <div>
+        <button id="clear_all">清空</button>
+    </div>
+</body>
+<script>
+    var clear_btn = document.getElementById("clear_all");
+    var run_btn = document.getElementById("run_all");
+
+    clear_btn.addEventListener('click',function(){
+        ctx.clearRect(0,0,500,500);
+        piexs.splice(0,piexs.length);
+    },false);
+
+    //获取canvas上下文
+    function getContextOfCanvas(id){
+        var canvas_dom = document.getElementById(id);
+        var ctx = canvas_dom.getContext("2d");
+        return ctx;
+    }
+    var ctx = getContextOfCanvas("canvas_draw");
+
+    //鼠标划线的方法(重绘piexs中的点)
+    function drawLine(){
+        ctx.clearRect(0,0,500,500);
+        for(var i = 0;i < piexs.length; i ++){
+            var piex = piexs[i];
+            ctx.fillStyle = "green";
+            ctx.beginPath();
+            ctx.arc(piex.x,piex.y,2,0,Math.PI*2,false);
+            ctx.closePath();
+            ctx.fill();
+        }
+    }
+    //保存鼠标滑过
+    var piexs = [];
+    //用来判断鼠标是否还在按下
+    var down_flag = false;
+    //监听事件
+    $('canvas').mousedown(function(e){//鼠标按下时的事件
+        down_flag = true;
+    }).mouseup(function(e){//鼠标抬起事件
+        down_flag = false;
+    }).mousemove(function(e){//鼠标移动事件
+        var x = e.clientX;
+        var y = e.clientY;
+        if(down_flag){//如果鼠标按下,则将点加入数组,并绘制
+            var piex = {
+                x:x,
+                y:y
+            };
+            piexs.push(piex);
+            drawLine();
+        }
+    })
+</script>
+</html>

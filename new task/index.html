@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>在线绘图工具</title>
+		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="css/new.css">
+		<script type="text/javascript" src="js/jquery-3.3.1.js" ></script>
+		<script type="text/javascript" src="js/jquery.min.js" ></script>
+		<style type="text/css">
+        canvas {
+        	position: absolute;
+            border-style: solid;
+            border-color: #F5DEB3;
+  			border-top-width: 0px;
+  			border-right-width: 0px;
+  			border-bottom-width: 0px;
+  			border-left-width: 5px;
+            top: 24px;
+            left: 330px;
+            
+        }
+    </style>
+	</head>
+	<body style="background:url(img/backgroundimg.jpg);background-repeat:no-repeat;background-size:100% 100%; background-attachment: fixed;">
+		<div class="tools" style="width: 50px;position: absolute;top: 200px;left:70px;">
+			<img id="new" src="img/设置.png" style="height:40px;width:40px;cursor: pointer;"/>
+			<img id="paint" src="img/画笔.png" style="height:40px;width:40px;cursor: pointer;"/>
+			<img src="img/油漆调色板.png" style="height:40px;width:40px;cursor: pointer;"/>
+			<img id="full" src="img/油漆桶.png" style="height:40px;width:40px;cursor: pointer;"/>
+			<img id="align" src="img/鼠标.png" style="height:40px;width:40px;cursor: pointer;"/>
+			<img id="cut" src="img/剪刀.png" style="height:40px;width:40px;cursor: pointer;"/>
+			<img src="img/橡皮.png" style="height:40px;width:40px;cursor: pointer;"/>
+			<img src="img/撤销.png" id = "revocation" onclick="revocation()" style="height:40px;width:40px;cursor: pointer;"/>
+			<img src="img/文件夹.png" style="height:40px;width:40px;cursor: pointer;"/>
+		</div>
+		<div id="new_detail" style="top:205px;left:-300px;position: absolute;">
+			<button id="new" class="button1">新建</button>
+			<button class="button1">保存</button>
+			<button class="button1">另存为</button>
+		</div>
+		
+		<div id="paint_detail" style="position:absolute; width: 200px;height: 240px;top: 245px;left: -300px;background-color:#eca127;">
+			<button class="button2">画笔</button>
+			<button class="button3">设置</button>
+			<div style="width: 200px;height: 210px;background-color:#f7de82;">
+				<!--<img id="line" onclick="detail(this)" class="paint" src="img/直线.png"/>-->
+				<img id="straightLine" onclick="brush('straightLine')" style="background-color:#f7de82;"class="paint" src="img/直线.png"/>
+				<img class="paint" src="img/折线.png"/>
+				<img id="rightangle" onclick="brush('rightangle')" style="background-color:#f7de82;"class="paint"  src="img/直角.png" />
+				<img class="paint" src="img/多边形.png"/>
+				<img id="positivearc" onclick="brush('positivearc')" style="background-color:#f7de82;"class="paint"  src="img/正圆弧.png" />
+				<img id="circle" onclick="brush('circle')" style="background-color:#f7de82;"class="paint"  src="img/圆.png" />
+				<img id="Ellipse" onclick="brush('Ellipse')" style="background-color:#f7de82;"class="paint"  src="img/椭圆.png" />
+				<img class="paint" src="img/圆弧.png"/>
+				<img class="paint" src="img/椭圆圆弧.png"/>
+				<img id="curve" onclick="brush('curve')" style="background-color:#f7de82;"class="paint"  src="img/曲线.png" />
+				<img id="roundedrectangle" onclick="brush('roundedrectangle')" style="background-color:#f7de82;"class="paint"  src="img/圆角矩形.png" />
+				<img id="rectangle" onclick="brush('rectangle')" style="background-color:#f7de82;"class="paint"  src="img/矩形.png" />
+			</div>
+		</div>
+		
+		<div  id="full_detail" style="top:337px;left:-300px;position: absolute;">
+			<button id="new" class="button4">颜色</button>
+			<button class="button4">图案</button>
+		</div>
+		
+		<div  id="align_detail" style="top:385px;left:-300px;position: absolute;">
+			<img style="width: 20px;" src="img/左对齐.png"/>
+			<img style="width: 20px;" src="img/居中对齐.png"/>
+			<img style="width: 20px;" src="img/右对齐.png"/>
+			<img style="width: 20px;" src="img/分散对齐.png"/>
+			<img style="width: 20px;" src="img/上对齐.png"/>
+			<img style="width: 20px;" src="img/下对齐.png"/>
+			<img style="width: 20px;" src="img/分散对齐上下.png"/>
+		</div>
+		
+		<div  id="cut_detail" style="top:425px;left:-300px;position: absolute;">
+			<button id="new" class="button5">内裁剪</button>
+			<button class="button5">外裁剪</button>
+		</div>
+		
+		
+		
+		<canvas id="canvas" width="1000" height="610" ></canvas>
+		<script type="text/javascript" src="js/align.js" ></script>
+		<script type="text/javascript" src="js/cut.js" ></script>
+		<script type="text/javascript" src="js/full.js" ></script>
+		<script type="text/javascript" src="js/new.js" ></script>
+		<script type="text/javascript" src="js/paint.js" ></script>
+		<script type="text/javascript" src="js/brush.js" ></script>
+        <script type="text/javascript" src="js/revocation.js" ></script>
+        <script type="text/javascript" src="js/shortcutkey.js" ></script>
+	</body>	
+</html>
