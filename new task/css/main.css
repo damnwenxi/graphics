@@ -85,3 +85,17 @@
 	margin-left: 6px;
 	cursor: pointer;
 }
+
+/* 柯锋添加样式 */
+.btn{
+    position: absolute;
+    bottom: 50px;
+    left: 50%; 
+}
+
+.btn button{
+    color: white;
+    background-color: #333;
+    border: none;
+    padding: 10px 20px;
+}
