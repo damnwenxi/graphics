@@ -8,5 +8,13 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "co-mysql": "^1.0.0",
+    "koa": "^2.7.0",
+    "koa-body": "^4.1.0",
+    "koa-server": "^1.2.2",
+    "koa-static": "^5.0.0",
+    "mysql": "^2.16.0"
+  }
 }
