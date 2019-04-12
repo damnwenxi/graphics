@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>管理员界面</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../layui/css/layui.css"  media="all">
+  <script src="../layui/layui.js" charset="utf-8"></script>
+</head>
+  
+<body>
+<div class="layui-layout layui-layout-admin">
+	<div class="layui-header header header-demo">
+		<ul class="layui-nav layui-bg-red">
+  			<li class="layui-nav-item layui-this"><i class="layui-icon layui-icon-friends"></i>  商城管理</li>
+			<li class="layui-nav-item"><a href=""><i class="layui-icon layui-icon-left"></i>界面切换 </a></li> 
+		</ul>
+	</div>
+
+	<div class="layui-side layui-bg-cyan">
+		<div class="layui-side-scroll">
+  			<ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
+  				<li class="layui-nav-item layui-bg-cyan ">
+  					<a href="javascript:;"> <i class="layui-icon "></i> 分类管理</a>
+  					<dl class="layui-nav-child">
+     	 			<dd><a href="admain1_1.html">添加分类</a></dd>
+      				<dd><a href="admain1_2.html">查询分类</a></dd>
+    				</dl>
+  					
+  				</li> 
+  				<li class="layui-nav-item layui-bg-cyan">
+  					<a href="javascript:;"> <i class="layui-icon "></i> 图书管理</a>
+  					<dl class="layui-nav-child">
+     	 			<dd><a href="admain2_1.html">添加图书</a></dd>
+      				<dd><a href="admain2_2.html">查询图书</a></dd>
+    				</dl>
+  				</li> 
+  				<li class="layui-nav-item layui-bg-cyan">
+  					<a href="javascript:;"> <i class="layui-icon "></i> 订单管理</a>
+  					<dl class="layui-nav-child">
+     	 			<dd><a href="admain3_1.html">所有订单</a></dd>
+      				<dd><a href="admain3_2.html">待处理订单</a></dd>
+      				<dd><a href="admain3_3.html">已处理订单</a></dd>
+    				</dl>
+  				</li>
+  				<li class="layui-nav-item layui-bg-cyan">
+  					<a href="javascript:;"> <i class="layui-icon "></i> 用户管理</a>
+  					<dl class="layui-nav-child">
+     	 			<dd><a href="admain4_1.html">添加用户</a></dd>
+      				<dd><a href="admain4_2.html">查询用户</a></dd>
+    				</dl>
+  				</li>
+  			</ul>
+  		</div>
+  	</div>
+  	<div class="layui-body site-demo">
+  		<div class="site-demo">
+  			
+  		
+  		</div>
+  	
+  	</div>
+  	
+ </div>
+  <script src="../layui/layui.js" charset="utf-8"></script>
+  <script>
+layui.use('element', function(){
+  var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+  
+  //监听导航点击
+  element.on('nav(demo)', function(elem){
+    //console.log(elem)
+    layer.msg(elem.text());
+  });
+});
+</script>
+  
+  
+</body>
+</html>
+

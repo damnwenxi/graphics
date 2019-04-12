@@ -1,0 +1,27 @@
+.button1{
+	background:white;
+	border-style: none;
+	width:50px;
+	height:25px;
+	margin-bottom: 5px;
+}
+
+
+/* 添加样式 */
+.btn{
+    margin: 10px auto;
+    bottom: 50px;
+    left: 50%; 
+}
+
+.btn button{
+    color: white;
+    background-color: #333;
+    border: none;
+    padding: 10px 20px;
+}
+
+/*.button1:hover {
+	background:aliceblue;
+	border-style: none;
+}*/
