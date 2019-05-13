@@ -1,0 +1,67 @@
+.button1{
+	background:white;
+	border-style: none;
+	width:50px;
+	height:25px;
+	margin-bottom: 5px;
+}
+
+
+/* 添加样式 */
+.btn{
+    margin: 10px auto;
+    bottom: 50px;
+    left: 50%; 
+}
+
+.btn button{
+    color: white;
+    background-color: #333;
+    border: none;
+    padding: 10px 20px;
+}
+
+/*.button1:hover {
+	background:aliceblue;
+	border-style: none;
+}*/
+
+* {
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+#slogan {
+    margin-bottom: 5px;
+    font: 3em 'Italiana', sans-serif;
+    text-transform: lowercase;
+}
+
+#canvas {
+    margin: 0 auto;
+    border-style: none;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #bbb;
+}
+
+#type img {
+    width: 25px !important;
+    height: 25px !important;
+    padding: 0 !important;
+    border: none !important;
+}
+
+#type img:hover {
+    background-color: #ddd;
+}
+
+.button1 {
+    padding: 0 3px !important;
+    width: 55px;
+}
+
+.button1:hover {
+    background-color: #ddd;
+    border-radius: 3px;
+}

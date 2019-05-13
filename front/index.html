@@ -85,7 +85,8 @@
 					<img src="img/选择.png" style="width: 20px;" /><button class="button1">选择</button>
 				</div>
 				<div style="width: 80px;border-right:1px solid lightgray;display: inline-block;">
-					<img src="img/裁剪.png" style="width: 20px;" /><button class="button1">裁剪</button>
+					
+					<button id="clip" class="button1"><img  src="img/裁剪.png" style="width: 20px;" />裁剪</button>
 					<img src="img/旋转.png" style="width: 20px;" /><button class="button1">旋转</button>
 				</div>
 				<div style="width: 80px;border-right:1px solid lightgray;display: inline-block;">
@@ -165,7 +166,16 @@
 
 	<!-- 添加依赖js -->
 	<script type="text/javascript" src="js/UpDownLoad.js" ></script>
+	<!-- 裁剪 -->
+	<!-- 直线 -->
+	<script src="./js/InnerClip.js"></script>
+	<script src="./js/OuterClip.js"></script>
 
+	<!-- 多边形 -->
+	<script src="./MulInnerClip.js"></script>
+	<script src="./MulOuterClip.js"></script>
+
+	<script src="./js/clip.js"></script>
 	<script src="js/brush.js"></script>
 	<script type="text/javascript" src="js/revocation.js"></script>
 	<script type="text/javascript" src="js/shortcutkey.js"></script>

@@ -4,12 +4,13 @@ var type = null;                //按钮类型
 var parray = [];                //存放当前绘制对象的所有点
 var index = 0;                  //数组下标
 var objs = [];                  //画布所有对象的集合
+var option = {};
 
 // 画布左上角相对于client的坐标
 var of_p = $("#canvas").offset();
 var of_left = of_p.left;
 var of_top = of_p.top;
-console.log(of_left,of_top);
+console.log(of_left, of_top);
 
 /**
  *  鼠标监听事件，不同对象对不同的鼠标事件有不同的反应
@@ -29,12 +30,12 @@ $('canvas').mousedown(function (e) {
 
     // 鼠标左键按下走这里
     if (type != null && e.button == 0) {
-        var last = objs[objs.length-1];
+        var last = objs[objs.length - 1];
         switch (type) {
-            
+
             case "polygon":
                 // 判断上一个多边形是否绘制结束
-                if(last.doneFlag){
+                if (last.doneFlag) {
                     var obj = createNewItem();
                     objs.push(obj);
                 }
@@ -42,10 +43,10 @@ $('canvas').mousedown(function (e) {
                 ps.px = e.clientX - of_left;
                 console.log(ps);
                 ps.py = e.clientY - of_top;
-                if(objs[objs.length - 1].vertices.length<3){
-                    objs[objs.length - 1].vertices.push(e.clientX - of_left,e.clientY - of_top);
+                if (objs[objs.length - 1].vertices.length < 3) {
+                    objs[objs.length - 1].vertices.push(e.clientX - of_left, e.clientY - of_top);
                 }
-                objs[objs.length - 1].vertices.push(e.clientX - of_left,e.clientY - of_top);
+                objs[objs.length - 1].vertices.push(e.clientX - of_left, e.clientY - of_top);
                 // console.log(objs[objs.length - 1].vertices);
                 parray[index] = ps;
                 index++;
@@ -61,13 +62,15 @@ $('canvas').mousedown(function (e) {
             case "rectangle":
             case "roundedrectangle":
             case "positivearc":
+                console.log(e.clientX - of_left);
+                console.log(e.clientY - of_top);
                 obj = createNewItem();//
                 obj.level = objs.length;//图元层次为当前图元数组中的下标层次。
-                objs.push(obj);//放入objs
                 down_flag = true;
                 var ps = new Point();
                 ps.px = e.clientX - of_left;
                 ps.py = e.clientY - of_top;
+                objs.push(obj);//放入objs
                 //if(parray_ini.length==0){
                 //	parray_ini[0]=ps;
                 //}
@@ -82,9 +85,9 @@ $('canvas').mousedown(function (e) {
         switch (type) {
             // 多边形，鼠标右键按下结束
             case "polygon":
-                var ex = objs[objs.length-1].vertices[0];
-                var ey = objs[objs.length-1].vertices[1];
-                objs[objs.length-1].vertices.push(ex,ey); 
+                var ex = objs[objs.length - 1].vertices[0];
+                var ey = objs[objs.length - 1].vertices[1];
+                objs[objs.length - 1].vertices.push(ex, ey);
 
                 // var ps = new Point();
                 // ps.px = e.clientX;
@@ -93,14 +96,15 @@ $('canvas').mousedown(function (e) {
                 // parray[index] = ps;
                 // index++;
                 update();
-                objs[objs.length-1].doneFlag = true;
-
+                objs[objs.length - 1].doneFlag = true;
+                parray = [];//数组清空
+                index = 0;//下标清空
                 // parray = [];//数组清空
                 // //parray_ini = [];//数组清空
                 // //parray_init = [];//数组清空
                 // index = 0;//下标清空
                 break;
-            case "brokenline": 
+            case "brokenline":
                 break;
         }
     }
@@ -110,7 +114,6 @@ $('canvas').mousedown(function (e) {
 $('canvas').mouseup(function (e) {
     if (type != null && e.button == 0) {
         switch (type) {
-            
             case "polygon":
                 down_flag = false;
                 var ps = new Point();
@@ -133,6 +136,81 @@ $('canvas').mouseup(function (e) {
                 // index++;
                 // update();
                 break;
+            case "rectangle":
+                down_flag = false;
+
+                // 裁剪按钮点击之后
+                if (option.name == 'clip') {
+                    // 最后一个元素是裁剪用的矩形，记录矩形的两个关键点
+                    var lastItem = objs[objs.length - 1];
+                    option.rx = lastItem.spoint;
+                    option.ry = lastItem.epoint;
+                    objs.pop();
+                }
+
+
+                // 矩形刷新
+                var ps = new Point();
+                ps.px = e.clientX - of_left;
+                ps.py = e.clientY - of_top;
+                parray[index] = ps;
+                index++;
+                update();
+                parray = [];//数组清空
+                index = 0;//下标清空
+                // console.log("done");
+
+                var lastItem = objs[objs.length - 1];
+                // console.log(lastItem instanceof Line);
+                 // 判断待裁剪的对象
+                if (lastItem instanceof Line) {
+                    // 直线走这里
+                    var clipType = window.confirm("内裁剪OR外裁剪？");
+                    if (clipType) {
+                        canvasClear();//画布清空
+                        for (var i = 0; i < option.line.length; i += 2) {
+                            Inner_cohenSutherland(option.line[i], option.line[i + 1], option.rx, option.ry);
+                        }
+                        // console.log(objs);
+
+                    } else {
+                        canvasClear();//画布清空
+                        for (var i = 0; i < option.line.length; i += 2) {
+                            Outer_cohenSutherland(option.line[i], option.line[i + 1], option.rx, option.ry);
+                        }
+                        // console.log(objs);
+                    }
+                    // 多边形走这里
+                }else if(lastItem instanceof Polygon){
+                    var vertice = lastItem.vertices;
+                    // console.log(vertice);
+                    // 预处理多边形顶点数组，去头去尾，设计多边形时根据需要开头顶点push了两次
+                    vertice.shift();
+                    vertice.shift();
+                    vertice.pop();
+                    vertice.pop();
+
+                    // 多边形裁剪参数：顶点列表
+                    var list = [];
+                    for(var i=0;i<vertice.length;i+=2){
+                        var ps = new Point;
+                        ps.px = vertice[i];
+                        ps.py = vertice[i+1];
+                        list.push(ps);
+                    }
+                    // console.log(list);
+                    var clipType = window.confirm("内裁剪OR外裁剪？");
+                    if (clipType) {
+                        objs.pop();
+                        rePaint();
+                        Mul_Inner_SutherlandHodgman(list,option.rx,option.ry);
+                        // console.log(objs);
+
+                    } else {
+                        console.log("外裁剪");
+                    }
+                }
+                break;
             case "brokenline":
             case "straightLine":
             case "rightangle":
@@ -140,7 +218,6 @@ $('canvas').mouseup(function (e) {
             case "Ellipse":
             case "elliparc":
             case "curve":
-            case "rectangle":
             case "roundedrectangle":
             case "positivearc":
                 down_flag = false;
@@ -164,7 +241,7 @@ $('canvas').mousemove(function (e) {
         switch (type) {
 
             // case条件顺序不能改变，改变会出错
-            
+
             case "polygon":
                 // var lenOfVertices = objs[objs.length-1].vertices.length;
                 // var ps = new Point();
@@ -176,7 +253,7 @@ $('canvas').mousemove(function (e) {
                 // objs[objs.length-1].vertices[lenOfVertices-1] = ps;
                 break;
             case "straightLine":
-            case "brokenline":    
+            case "brokenline":
             case "rightangle":
             case "circle":
             case "Ellipse":
@@ -225,7 +302,6 @@ function update() {
             objs[objs.length - 1].epoint = parray[parray.length - 1];
             break;
         case "rightangle"://更新直角
-            // console.log(objs.length);
             objs[objs.length - 1].spoint = parray[0];
             objs[objs.length - 1].epoint = parray[parray.length - 1];
             break;
@@ -294,14 +370,14 @@ function brush(item) {
     var items = document.getElementById(item);//查找元素
     //如果是当前一选中类型，颜色变浅，取消选中
     if (item == type) {
-        items.style.backgroundColor='#fff';
+        items.style.backgroundColor = '#fff';
         type = null;
     } else {
         if (type != null) {//已有选中但换选别的类型
             var temp = document.getElementById(type);
-            temp.style.backgroundColor='#fff'//原本类型的颜色变浅
+            temp.style.backgroundColor = '#fff'//原本类型的颜色变浅
         }
-        items.style.backgroundColor='#ddd'//颜色加深
+        items.style.backgroundColor = '#ddd'//颜色加深
 
         // 选择不同画笔，全局变量type类型进行改变
         switch (item) {
@@ -531,12 +607,11 @@ function Polygon() {
     this.doneFlag = false;
 
     this.draw = function () {
-        console.log("画了多边形");
         for (var j = 0; j < this.vertices.length; j += 2) {
             var pax = this.vertices[j];
-            var pay = this.vertices[j+1];
-            var pbx = this.vertices[j+2];
-            var pby = this.vertices[j+3];
+            var pay = this.vertices[j + 1];
+            var pbx = this.vertices[j + 2];
+            var pby = this.vertices[j + 3];
             var dx = pbx - pax;
             var dy = pby - pay;
             var x = pax;

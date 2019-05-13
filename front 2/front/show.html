@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SHOW</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Italiana&amp;subset=latin">
+
+    <script type="text/javascript" src="js/libs/jquery.min.js"></script>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            width: 100%;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
+
+        /* 弹性盒子 */
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-content: flex-start;
+        }
+
+        .container li {
+            padding: 20px;
+            width: 31%;
+            height: 300px;
+            margin: 1%;
+            border-radius: 5px;
+            box-shadow: 10px 10px 5px #dddddd
+        }
+
+        .container li img {
+            width: 100%;
+            border: 5px solid whitesmoke;
+            border-radius: 5px;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font: 3em 'Italiana', sans-serif;
+            text-transform: lowercase;
+            text-align: center;
+        }
+
+        a {
+            background-color: #444444;
+            color: white;
+            padding: 10px;
+        }
+
+        span {
+            margin: 0 20px;
+            background-color: #444444;
+            color: #fff;
+            padding: 2px 2em;
+        }
+        span:hover{
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>SHOW <a href="./index.html">back</a> </h1>
+    <div class="container">
+
+    </div>
+
+    <p style="text-align:center;margin-bottom: 5em;">
+        <span id="pre">上一页</span>
+        <span id="next">下一页</span>
+    </p>
+
+    <script>
+        window.onload = function () {
+            var page = 0;
+            var BASE_URL = 'http://118.25.210.208:8081';
+
+            var box = document.getElementsByClassName('container')[0];
+            // 首屏数据获取
+            $.get(BASE_URL + '/all?page=0', res => {
+                // page+1
+                page = res.page+6;
+                var img_list = res.images;
+                box.innerHTML = '';
+                for (var i = 0; i < img_list.length; i++) {
+                    var Oli = document.createElement('li');
+                    var Oh2 = document.createElement('p');
+                    var Oh3 = document.createElement('p');
+                    var Oimg = document.createElement('img');
+
+                    Oh2.innerText = img_list[i].title+"时间："+img_list[i].c_date;
+                    Oh3.innerText = "作者: " + img_list[i].author+"赞："+img_list[i].likes;
+                    Oimg.setAttribute("src", img_list[i].url);
+
+                    box.appendChild(Oli);
+                    Oli.appendChild(Oimg);
+                    Oli.appendChild(Oh2);
+                    Oli.appendChild(Oh3);
+                }
+            });
+
+            $('#next').click(function () {
+                // 下一页
+                $.get(BASE_URL + '/all?page=' + page, res => {
+                    // page+1
+                    page=res.page+6;
+                    var img_list = res.images;
+                    box.innerHTML = '';
+                    for (var i = 0; i < img_list.length; i++) {
+                        var Oli = document.createElement('li');
+                        var Oh2 = document.createElement('h2');
+                        var Oh3 = document.createElement('h2');
+                        var Oimg = document.createElement('img');
+
+                        Oh2.innerText = img_list[i].title;
+                        Oh3.innerText = "作者: " + img_list[i].author;
+                        Oimg.setAttribute("src", img_list[i].url);
+
+                        box.appendChild(Oli);
+                        Oli.appendChild(Oimg);
+                        Oli.appendChild(Oh2);
+                        Oli.appendChild(Oh3);
+                    }
+                });
+            });
+
+
+            // 上一页
+            $('#pre').click(function(){
+                page -= 12;
+                if(page<0) page = 0;
+                $.get(BASE_URL + '/all?page=' + page, res => {
+                page = res.page+6;
+                var img_list = res.images;
+                box.innerHTML = '';
+                for (var i = 0; i < img_list.length; i++) {
+                    var Oli = document.createElement('li');
+                    var Oh2 = document.createElement('h2');
+                    var Oh3 = document.createElement('h2');
+                    var Oimg = document.createElement('img');
+
+                    Oh2.innerText = img_list[i].title;
+                    Oh3.innerText = "作者: " + img_list[i].author;
+                    Oimg.setAttribute("src", img_list[i].url);
+
+                    box.appendChild(Oli);
+                    Oli.appendChild(Oimg);
+                    Oli.appendChild(Oh2);
+                    Oli.appendChild(Oh3);
+                }
+            });
+            });
+            
+        }
+
+
+    </script>
+</body>
+
+</html>

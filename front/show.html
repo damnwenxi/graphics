@@ -72,7 +72,7 @@
             var box = document.getElementsByClassName('container')[0];
             // var img_list = [];
             $.get(BASE_URL + '/all', res => {
-                // console.log(res.images);
+                console.log(res);
                 var img_list = res.images;
                 for (var i=0; i<img_list.length;i++){
                     var Oli = document.createElement('li');
