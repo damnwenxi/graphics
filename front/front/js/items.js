@@ -267,10 +267,10 @@ function Rectangle(s , e) {
         var xlincre = dx * 1.0 / eps;
         var ylincre = dy * 1.0 / eps;
         for (var i = 0; i <= eps; i++) {
-            new Point(pax, y).draw();//画点
-            new Point(x, pby).draw();//画点
-            new Point(pbx, y).draw();//画点
-            new Point(x, pay).draw();//画点
+            new Point(pax, y).draw(this.color);//画点
+            new Point(x, pby).draw(this.color);//画点
+            new Point(pbx, y).draw(this.color);//画点
+            new Point(x, pay).draw(this.color);//画点
             x += xlincre;
             y += ylincre;
 

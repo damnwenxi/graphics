@@ -65,7 +65,8 @@
             color: #fff;
             padding: 2px 2em;
         }
-        span:hover{
+
+        span:hover {
             cursor: pointer;
         }
     </style>
@@ -92,7 +93,7 @@
             // 首屏数据获取
             $.get(BASE_URL + '/all?page=0', res => {
                 // page+1
-                page = res.page+6;
+                page = res.page + 6;
                 var img_list = res.images;
                 box.innerHTML = '';
                 for (var i = 0; i < img_list.length; i++) {
@@ -101,8 +102,8 @@
                     var Oh3 = document.createElement('p');
                     var Oimg = document.createElement('img');
 
-                    Oh2.innerText = img_list[i].title+"时间："+img_list[i].c_date;
-                    Oh3.innerText = "作者: " + img_list[i].author+"赞："+img_list[i].likes;
+                    Oh2.innerText = img_list[i].title + "时间：" + img_list[i].c_date;
+                    Oh3.innerText = "作者: " + img_list[i].author + "赞：" + img_list[i].likes;
                     Oimg.setAttribute("src", img_list[i].url);
 
                     box.appendChild(Oli);
@@ -116,17 +117,17 @@
                 // 下一页
                 $.get(BASE_URL + '/all?page=' + page, res => {
                     // page+1
-                    page=res.page+6;
+                    page = res.page + 6;
                     var img_list = res.images;
                     box.innerHTML = '';
                     for (var i = 0; i < img_list.length; i++) {
                         var Oli = document.createElement('li');
-                        var Oh2 = document.createElement('h2');
-                        var Oh3 = document.createElement('h2');
+                        var Oh2 = document.createElement('p');
+                        var Oh3 = document.createElement('p');
                         var Oimg = document.createElement('img');
 
-                        Oh2.innerText = img_list[i].title;
-                        Oh3.innerText = "作者: " + img_list[i].author;
+                        Oh2.innerText = img_list[i].title + "时间：" + img_list[i].c_date;
+                        Oh3.innerText = "作者: " + img_list[i].author + "赞：" + img_list[i].likes;
                         Oimg.setAttribute("src", img_list[i].url);
 
                         box.appendChild(Oli);
@@ -139,31 +140,31 @@
 
 
             // 上一页
-            $('#pre').click(function(){
+            $('#pre').click(function () {
                 page -= 12;
-                if(page<0) page = 0;
+                if (page < 0) page = 0;
                 $.get(BASE_URL + '/all?page=' + page, res => {
-                page = res.page+6;
-                var img_list = res.images;
-                box.innerHTML = '';
-                for (var i = 0; i < img_list.length; i++) {
-                    var Oli = document.createElement('li');
-                    var Oh2 = document.createElement('h2');
-                    var Oh3 = document.createElement('h2');
-                    var Oimg = document.createElement('img');
+                    page = res.page + 6;
+                    var img_list = res.images;
+                    box.innerHTML = '';
+                    for (var i = 0; i < img_list.length; i++) {
+                        var Oli = document.createElement('li');
+                        var Oh2 = document.createElement('p');
+                        var Oh3 = document.createElement('p');
+                        var Oimg = document.createElement('img');
 
-                    Oh2.innerText = img_list[i].title;
-                    Oh3.innerText = "作者: " + img_list[i].author;
-                    Oimg.setAttribute("src", img_list[i].url);
+                        Oh2.innerText = img_list[i].title + "时间：" + img_list[i].c_date;
+                        Oh3.innerText = "作者: " + img_list[i].author + "赞：" + img_list[i].likes;
+                        Oimg.setAttribute("src", img_list[i].url);
 
-                    box.appendChild(Oli);
-                    Oli.appendChild(Oimg);
-                    Oli.appendChild(Oh2);
-                    Oli.appendChild(Oh3);
-                }
+                        box.appendChild(Oli);
+                        Oli.appendChild(Oimg);
+                        Oli.appendChild(Oh2);
+                        Oli.appendChild(Oh3);
+                    }
+                });
             });
-            });
-            
+
         }
 
 

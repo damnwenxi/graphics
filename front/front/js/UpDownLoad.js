@@ -61,13 +61,14 @@ function upload(){
     fd.append("title",title);
     $.ajax({
         url:BASE_URL+'/upload',
-        img_type:"POST",
+        type:"POST",
         processData:false,
-        contentimg_type:false,
+        contentType:false,
         data:fd,
         success:(res)=>{
             console.log(res.data);
         }
     });
 }
+
 

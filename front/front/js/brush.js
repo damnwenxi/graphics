@@ -119,7 +119,7 @@ function rePaint() {
 
     for (var i = 0; i < objs.length; i++) {
         objs[i].draw();
-        if(objs[i].limit_4.length == 4){
+        if(objs[i].limit_4&&objs[i].limit_4.length == 4){
             objs[i].chooseRectangle.draw();
         }
     }
@@ -292,6 +292,7 @@ function Point(px, py, type) {
      */
     this.draw = function () {
         //绘制成矩形
+        ctx.fillStyle = arguments[0];
         ctx.fillRect(this.px, this.py, 1, 1);
     }
 }

@@ -199,6 +199,7 @@ $('canvas').mousedown(function (e) {
         }
         if(!maxobj){
             option.name = '';
+            $('#option button').css('background-color','#fff');
         }
 
         // 将找到的图元id与objs中的对比，找出objs中的元素，给其limit_4赋值
@@ -219,6 +220,7 @@ $('canvas').mousedown(function (e) {
                     s = new Point(x_min,y_min);
                     e = new Point(x_max,y_max);
                     objs[n].chooseRectangle = new Rectangle(s,e);
+                    objs[n].chooseRectangle.color = 'red';
                     rePaint();
                 }
                 // console.log(objs[n]);
