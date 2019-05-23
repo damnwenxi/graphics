@@ -2,10 +2,21 @@
 
 //鼠标抬起事件
 $('canvas').mouseup(function (e) {
+    down_flag = false;
+
+    upPoint.push(e.clientX-of_left,e.clientY-of_top);
+
+    // 如果当前操作对象中有e_vertices，即多边形移动后的顶点值，赋值给当前多边形对象
+    // 新的起点为当前多边形的新位置
+    if(option.e_vertices){
+        // 由于option.obj是图元对象列表中某一对象的引用，故修改option.obj会影响到objs[i]
+        option.obj.vertices = option.e_vertices;
+        option.s_vertices = option.obj.vertices.slice(0);
+    }
+
     if (type != null && e.button == 0) {
         switch (type) {
             case "polygon":
-                down_flag = false;
                 var ps = new Point();
                 ps.px = e.clientX - of_left;
                 ps.py = e.clientY - of_top;
@@ -27,8 +38,6 @@ $('canvas').mouseup(function (e) {
                 // update();
                 break;
             case "rectangle":
-                down_flag = false;
-
                 // 裁剪按钮点击之后
                 if (option.name == 'clip') {
                     // 最后一个元素是裁剪用的矩形，记录矩形的两个关键点

@@ -1,3 +1,4 @@
+
 $(document).contextmenu(function (e) {
     e.preventDefault();
 });
@@ -6,21 +7,24 @@ var type = null;                //按钮类型
 var parray = [];                //存放当前绘制对象的所有点
 var index = 0;                  //数组下标
 var objs = [];                  //画布所有对象的集合
-var option = {};
+// 当前操作元素
+var option = {
+    vertices: []
+};
+var downPoint = [];           //鼠标按下时的点坐标    
+var upPoint = [];             //鼠标松开时的点坐标
+var is_hot_dot = false;         // 热键
 
 // 画布左上角相对于client的坐标
 var of_p = $("#canvas").offset();
 var of_left = of_p.left;
 var of_top = of_p.top;
-console.log(of_left, of_top);
-
-/**
- *  鼠标监听事件，不同对象对不同的鼠标事件有不同的反应
- * */
+// console.log(of_left, of_top);
 
 //鼠标是否按下标识
 var down_flag = false;
-
+// 鼠标是否移动标识
+var move_flag = false;
 
 /*
 元素属性更新
@@ -106,12 +110,34 @@ function update() {
     rePaint();
 }
 
+// 标准线
+function baseLine(color){
+    ctx.moveTo(540,0);
+    ctx.lineTo(540,540);
+    ctx.moveTo(0,270);
+    ctx.lineTo(1080,270);
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = color;
+    ctx.stroke();
+}
+baseLine('#ccc');
+
+// 画空心圆,描绘选中框
+function cornerCircle(x,y){
+    ctx.beginPath();				
+    ctx.lineWidth=1;	//重新设置画笔
+    ctx.strokeStyle="green";
+    ctx.arc(x,y,5,0,360,false);
+    ctx.stroke();
+    ctx.closePath();
+}
+
 /*
 画布重绘
  */
 function rePaint() {
     canvasClear();//画布清空
-
+    baseLine('#ccc');
     // 鼠标松开时才打印，绘图中不打印，打印画布最后一个对象，方便调试
     if (!down_flag) {
         console.log(objs);
@@ -119,9 +145,19 @@ function rePaint() {
 
     for (var i = 0; i < objs.length; i++) {
         objs[i].draw();
-        if(objs[i].limit_4&&objs[i].limit_4.length == 4){
-            objs[i].chooseRectangle.draw();
-        }
+    }
+    
+    var optionObj = option;
+    if(optionObj && optionObj.limit_4){
+        var optionObj = option.obj;
+	    var limit_4 = optionObj.limit_4;
+        console.log(limit_4);
+        // obj.chooseRectangle.draw();
+        // 描绘矩形四个热点
+        cornerCircle(limit_4[0],limit_4[2]);
+        cornerCircle(limit_4[1],limit_4[2]);
+        cornerCircle(limit_4[0],limit_4[3]);
+        cornerCircle(limit_4[1],limit_4[3]);
     }
 }
 
@@ -269,7 +305,7 @@ function Drawable() {
     this.level = 0;         //元素层次，用于后续，带不同颜色的图元的刷新
     // id 自动生成 当前时间戳
     this.id = parseInt(Date.now());
-    this.color = "#000000"; //元素颜色，默认颜色黑色
+    this.color = "#000"; //元素颜色，默认颜色黑色
     this.weight = 1;        //元素宽度，默认图元线条宽度
     this.vertices = [];     // 数组对象，存放图形顶点
     this.edgepoints = new Array();
@@ -281,7 +317,7 @@ function Drawable() {
  */
 function Point(px, py, type) {
     //继承父类
-    Drawable.apply(this);
+    // Drawable.apply(this);
 
     // arguments 属性获取当前方法的参数
     this.px = arguments[0] ? arguments[0] : 0;
@@ -290,9 +326,9 @@ function Point(px, py, type) {
     /*
     点亮一个点
      */
-    this.draw = function () {
+    this.draw = function (color) {
         //绘制成矩形
-        ctx.fillStyle = arguments[0];
+        ctx.fillStyle = color || "#000";
         ctx.fillRect(this.px, this.py, 1, 1);
     }
 }

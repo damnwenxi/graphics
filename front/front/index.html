@@ -11,24 +11,8 @@
 </head>
 
 <body>
-	<h2 id="slogan"></h2>
 	<div class="layui-tab">
-		<!-- <ul class="layui-tab-title">
-			<li>文件</li>
-			<li class="layui-this">主页</li>
-			<li>查看</li>
-		</ul> -->
 		<div class="layui-tab-content" style="height: 50px;">
-			<!--文件-->
-			<!-- <div class="layui-tab-item layui-show">
-				<div>
-					<img src="img/保存.png" style="width: 20px;display: inline-block;" /><button class="button1">新建</button>
-					<img src="img/另存为.png" style="width: 20px;display: inline-block;" /><button class="button1">保存</button>
-					<img src="img/开文件夹.png" style="width: 20px;display: inline-block;" /><button class="button1">打开</button>
-				</div>
-			</div> -->
-
-
 			<!--主页-->
 			<div id="option" class="layui-tab-item layui-show">
 				<div style="width: 80px;border-right:1px solid lightgray;display: inline-block;">
@@ -97,22 +81,14 @@
 				</div>
 
 			</div>
-
-
-			<!--查看-->
-			<!-- <div class="layui-tab-item layui-show">
-				<div style="display: inline-block;">
-					<img src="img/放大.png" style="width: 20px;display: inline-block;" /><button class="button1">放大</button>
-					<img src="img/缩小.png" style="width: 20px;display: inline-block;" /><button class="button1">缩小</button>
-				</div>
-			</div> -->
 		</div>
-		<hr />
 	</div>
 
 
 
 	<canvas width="1080" height="540" id="canvas"></canvas>
+	<!-- 鼠标位置跟踪 -->
+	<div id="position" style="position:absolute;left: 10px;top: 10px"></div>
 	<!-- 上传下载 -->
 	<div class="btn">
 			<button id="show"> <a style="color:white; text-decoration: none"  href="./show.html">作品展示</a> </button> <button id="download">保存到本地</button>	<button id="upload">上传到服务器</button>
@@ -121,9 +97,10 @@
 	<!-- 主要入口 -->
 	<script type="text/javascript" src="js/brush.js"></script>
 	<!-- 鼠标事件 -->
-	<script type="text/javascript" src="js/mouseDown.js"></script>
-	<script type="text/javascript" src="js/mouseUp.js"></script>
-	<script type="text/javascript" src="js/mouseMove.js"></script>
+	<script type="text/javascript" src="js/mouse/mouseDown.js"></script>
+	<script type="text/javascript" src="js/mouse/mouseMove.js"></script>
+	<script type="text/javascript" src="js/mouse/mouseUp.js"></script>
+	<script type="text/javascript" src="js/mouse/keyPress.js"></script>
 	<!-- 所有图元对象 -->
 	<script type="text/javascript" src="js/items.js"></script>
 
@@ -138,7 +115,7 @@
 	<!-- 快捷键 -->
 	<script type="text/javascript" src="js/shortcutkey.js"></script>
 	<!-- 操作 -->
-	<script src="js/option.js"></script>
+	<script type="text/javascript" src="js/option.js"></script>
 
 	<!-- layui -->
 	<script type="text/javascript" src="layui-v2.4.5/layui/layui.js"></script>

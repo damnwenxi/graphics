@@ -168,3 +168,71 @@ function Positivearcpitch(sx,sy,obj){
 	return null;
 }
 
+/**
+ * @desc 对选中的图元描绘选中框
+ * @param {obj: 选中图元对象} 
+ * @return null 
+ * @author kf
+ */
+function paintChooseRec(obj){
+	obj.chooseRectangle.draw();
+
+	var optionObj = option.obj;
+	var limit_4 = optionObj.limit_4;
+    if(optionObj && optionObj.limit_4.length >= 4){
+        // obj.chooseRectangle.draw();
+        // 描绘矩形四个热点
+        cornerCircle(limit_4[0],limit_4[2]);
+        cornerCircle(limit_4[1],limit_4[2]);
+        cornerCircle(limit_4[0],limit_4[3]);
+        cornerCircle(limit_4[1],limit_4[3]);
+    }
+}
+
+/**
+ * @desc 判断鼠标当前位置是否位于热点内
+ * @param e
+ * @return boolean
+ * @author kf
+ * @date 2019.5.23
+ */
+function isHotDot(e){
+	//当前操作对象
+	// console.log(option.obj.limit_4);
+	// 鼠标相对位置
+	var cx = e.clientX-of_left;
+	var cy = e.clientY-of_top;
+	if(option.obj && option.obj.limit_4){
+		const limit_4 = option.obj.limit_4;
+		
+		// 返回热点位置，顺时针方向1234
+		if(hotdot(limit_4[0],limit_4[2])){
+			return 1;
+		}else if(hotdot(limit_4[1],limit_4[2])){
+			return 2;
+		}else if(hotdot(limit_4[1],limit_4[3])){
+			return 3;
+		}else if(hotdot(limit_4[0],limit_4[3])){
+			return 4;
+		}else{
+			return false;
+		}
+	}
+
+	function hotdot(x,y){
+		if(Math.abs(x-cx)<5 && Math.abs(y-cy)<5){
+			return true;
+		}
+	}
+}
+
+/**
+ * @desc 设置热点选中鼠标样式
+ * @param style
+ * @return none
+ * @author kf
+ * @date 2019.5.24
+ */
+function setCursorStyle(style){
+	document.getElementById('cavans').style.cursor = style;
+}
